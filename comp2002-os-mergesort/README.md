@@ -1,9 +1,9 @@
-README.template
+README.md
 
 ## Project Number/Title 
 
-* Authors: Your Name, and your group members’ names
-* Group name: Your Group Name
+* Authors: Arad Haghighatnejad, Lilith Jackson, Isaac Sheehan
+* Group name: Group 37
 
 ## Overview
 

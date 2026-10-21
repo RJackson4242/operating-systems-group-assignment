@@ -9,6 +9,29 @@
 
 /* this function will be called by mergesort() and also by parallel_mergesort(). */
 void merge(int leftstart, int leftend, int rightstart, int rightend){
+	int leftindex = leftstart;
+	int rightindex = rightstart;
+	int tempindex = leftstart;
+
+	while(leftindex <= leftend && rightindex <= rightend) {
+		if(A[leftindex] <= A[rightindex]) {
+			B[tempindex++] = A[leftindex++];
+		} else {
+			B[tempindex++] = A[rightindex++];
+		}
+	}
+
+	while(leftindex <= leftend) {
+		B[tempindex++] = A[leftindex++];
+	}
+
+	while(rightindex <= rightend) {
+		B[tempindex++] = A[rightindex++];
+	}
+
+	for(int i = leftstart; i <= rightend; i++) {
+		A[i] = B[i];
+	}
 }
 
 /* this function will be called by parallel_mergesort() as its base case. */

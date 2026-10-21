@@ -37,6 +37,7 @@ void merge(int leftstart, int leftend, int rightstart, int rightend){
 /* this function will be called by parallel_mergesort() as its base case. */
 void my_mergesort(int left, int right){
 	if(left >= right) return;
+	
 	int mid = left + (right - left) / 2;
 
 	my_mergesort(left, mid);
@@ -47,11 +48,18 @@ void my_mergesort(int left, int right){
 
 /* this function will be called by the testing program. */
 void * parallel_mergesort(void *arg){
-		return NULL;
+	// remember to free the memory allocated by buildArgs
+	return NULL;
 }
 
 /* we build the argument for the parallel_mergesort function. */
 struct argument * buildArgs(int left, int right, int level){
-		return NULL;
+	struct argument *args = (struct argument*)malloc(sizeof(struct argument));
+
+	args->left = left;
+	args->right = right;
+	args->level = level;
+	
+	return args;
 }
 

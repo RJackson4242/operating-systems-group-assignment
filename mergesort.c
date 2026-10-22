@@ -12,6 +12,7 @@ void merge(int leftstart, int leftend, int rightstart, int rightend){
 	int leftindex = leftstart;
 	int rightindex = rightstart;
 	int tempindex = leftstart;
+	int i;
 
 	while(leftindex <= leftend && rightindex <= rightend) {
 		if(A[leftindex] <= A[rightindex]) {
@@ -29,7 +30,7 @@ void merge(int leftstart, int leftend, int rightstart, int rightend){
 		B[tempindex++] = A[rightindex++];
 	}
 
-	for(int i = leftstart; i <= rightend; i++) {
+	for(i = leftstart; i <= rightend; i++) {
 		A[i] = B[i];
 	}
 }
@@ -48,7 +49,42 @@ void my_mergesort(int left, int right){
 
 /* this function will be called by the testing program. */
 void * parallel_mergesort(void *arg){
-	// remember to free the memory allocated by buildArgs
+	int left, right, level, mid;
+    void *leftargs;
+    void *rightargs;
+    pthread_t thread_left;
+
+	struct argument *args = (struct argument*)arg;
+
+	left = args->left;
+	right = args->right;
+	level = args->level;
+
+	// free the memory allocated by buildArgs
+	free(args);
+
+	if (left >= right) return NULL;
+
+	if (level >= cutoff) {
+		my_mergesort(left, right);
+		return NULL;
+	}
+
+	mid = left + (right - left) / 2;
+
+	leftargs = buildArgs(left, mid, level + 1);
+	rightargs = buildArgs(mid + 1, right, level + 1);
+
+	pthread_t leftthread;
+	pthread_t rightthread;
+
+	pthread_create(&leftthread, NULL, parallel_mergesort, leftargs);
+	pthread_create(&rightthread, NULL, parallel_mergesort, rightargs);
+	pthread_join(leftthread, NULL);
+	pthread_join(rightthread, NULL);
+
+	merge(left, mid, mid + 1, right);
+
 	return NULL;
 }
 
@@ -59,7 +95,7 @@ struct argument * buildArgs(int left, int right, int level){
 	args->left = left;
 	args->right = right;
 	args->level = level;
-	
+
 	return args;
 }
 

@@ -4,7 +4,6 @@
 #include <sys/times.h> /* for times system call */
 #include <sys/time.h>  /* for gettimeofday system call */
 #include <unistd.h>
-#include <error.h>     /* On MacOS you won't need this line */
 #include "mergesort.h"
 
 /* the number of levels of threads, specified by the user */
@@ -87,6 +86,8 @@ void generate_random_array(int A[], int n, int seed)
 }
 
 
+
+
 /*
  * check_if_sorted(int A[], int n):
  *
@@ -106,11 +107,15 @@ int check_if_sorted(int A[], int n)
 }
 
 /* this function prints A, but we only print the first 100 elements */
-void printA(void){
+void printA(int n){
 	int i;
 	printf("Array A:");
 	/* FIXME: we assume the size of A is at least 100, and this will fail if it is lower than 100 */
-	for(i=0;i<100;i++){
+	if (n >= 100)
+	{
+		n = 100;
+	}
+	for(i=0;i<n;i++){
 		printf(" %d",A[i]);
 	}
 	printf("\n");
@@ -159,7 +164,7 @@ int main(int argc, char **argv) {
 	sorting_time = getMilliSeconds() - start_time;
 
 	// print the array, for debugging purpose.
-	//printA();
+	//printA(n);
 	//printB();
 	// print results if correctly sorted otherwise cry foul and exit
 	if (check_if_sorted(A,n)) {

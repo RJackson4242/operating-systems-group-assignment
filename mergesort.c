@@ -46,7 +46,8 @@ void * parallel_mergesort(void *arg){
 	int left, right, level, mid;
     void *leftargs;
     void *rightargs;
-    pthread_t thread_left;
+    pthread_t rightthread;
+	int thread_created; // whether pthread_create succeeded
 
 	struct argument *args = (struct argument*)arg;
 
@@ -69,13 +70,15 @@ void * parallel_mergesort(void *arg){
 	leftargs = buildArgs(left, mid, level + 1);
 	rightargs = buildArgs(mid + 1, right, level + 1);
 
-	pthread_t leftthread;
-	pthread_t rightthread;
+	thread_created = (pthread_create(&rightthread, NULL, parallel_mergesort, rightargs) == 0);
 
-	pthread_create(&leftthread, NULL, parallel_mergesort, leftargs);
-	pthread_create(&rightthread, NULL, parallel_mergesort, rightargs);
-	pthread_join(leftthread, NULL);
-	pthread_join(rightthread, NULL);
+	parallel_mergesort(leftargs); // current main thread sorting the left side
+
+	if (thread_created) {                 //safety incase the thread cration fails. 
+		pthread_join(rightthread, NULL);
+	} else {
+		parallel_mergesort(rightargs);  // direct function call if the thread creation failed
+	}
 
 	merge(left, mid, mid + 1, right);
 

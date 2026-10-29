@@ -51,8 +51,8 @@ done
 
 for n in 2 "$length"; do
     for cutoff in 0 1 2 3 4 5; do
-        echo "alternating n:$n cutoff:$cutoff num1:-1 num2:1" 
-        ./test-mergesort-custom "$n" "$cutoff" "$trials" alternating -1 1
+        echo "alternating n:$n cutoff:$cutoff num1:-2147483648 num2:2147483647" 
+        ./test-mergesort-custom "$n" "$cutoff" "$trials" alternating -2147483648 -2147483647
         echo "exit code: $?"
     done
 done

@@ -29,6 +29,8 @@ To clean the repo by removing the build files:
 
     make clean
 
+Run the testing script with `bash run_test.sh` which will run prewritten tests.
+
 ## Features and usage
 
 Summarise the main features of your program. It is also appropriate to

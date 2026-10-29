@@ -28,12 +28,10 @@ void merge(int leftstart, int leftend, int rightstart, int rightend){
 		}
 	}
 
-	while(leftindex <= leftend) {
-		B[tempindex++] = A[leftindex++];
-	}
-
-	while(rightindex <= rightend) {
-		B[tempindex++] = A[rightindex++];
+	if (leftindex <= leftend) {
+    	memcpy(&B[tempindex], &A[leftindex], (leftend - leftindex + 1) * sizeof(int));
+	} else if (rightindex <= rightend) {
+		memcpy(&B[tempindex], &A[rightindex], (rightend - rightindex + 1) * sizeof(int));
 	}
 
 	memcpy(&A[leftstart], &B[leftstart], (rightend - leftstart + 1) * sizeof(int));

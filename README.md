@@ -29,7 +29,11 @@ To clean the repo by removing the build files:
 
     make clean
 
-Run the testing script with `bash run_test.sh` which will run prewritten tests.
+Run the testing script with 
+
+    bash run_test.sh
+
+This will run the script generating a variety of arrays for different testing.
 
 ## Features and usage
 

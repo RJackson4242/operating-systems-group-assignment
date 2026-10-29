@@ -259,7 +259,7 @@ int main(int argc, char **argv) {
 		{
 			// generate alternating input
 			if (argc < 7) { // there must be at least one command-line argument
-				fprintf(stderr, "Usage: %s <input size> <cutoff level> <equal> <num1> <num2> \n", argv[0]);
+				fprintf(stderr, "Usage: %s <input size> <cutoff level> <alternating> <num1> <num2> \n", argv[0]);
 				exit(1);
 			}
 			int num1 = atoi(argv[5]);

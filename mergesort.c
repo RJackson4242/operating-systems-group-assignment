@@ -75,16 +75,6 @@ void * parallel_mergesort(void *arg){
 
 	mid = left + (right - left) / 2;
 
-	/* if cutoff is not reached on initial call: 
-	Avoid creating threads if the next level reaches cutof
-	drops to sequential sorting */
-	if (level + 1 >= cutoff) {
-        my_mergesort(left, mid);
-        my_mergesort(mid + 1, right);
-        merge(left, mid, mid + 1, right);
-        return NULL;
-    }
-
 	leftargs = buildArgs(left, mid, level + 1);
 	rightargs = buildArgs(mid + 1, right, level + 1);
 

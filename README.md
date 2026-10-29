@@ -41,17 +41,17 @@ instruct the user how to use your program.
 Created a custom test script that read input from a text file to test specific custom inputs and has various functions to generate different types of arrays rather than just randomly generated inputs. Also created a bash script to automate the creation and testing of these different input arrays rather than manually running many different commands. The output of these commands is also piped into a text file so that they cna easily be read and compared through this script. The types of arrays tested and compared are sorted arrays, reverse sorted arrays, equal arrays where all arrays are the same element, alternating arrays where the array alternates between two values, random arrays which are made of random positive integers and random negative arrays that have random positive and negative numbers.
 
 ### The format of the test-mergesort-custom usage is as follows:
-./test-mergesort-custom <input size> <cutoff level> <number of trials> <sorted>
+./test-mergesort-custom `input size` `cutoff level` `number of trials` `sorted`
 
-./test-mergesort-custom <input size> <cutoff level> <number of trials>  <rsorted>
+./test-mergesort-custom `input size` `cutoff level` `number of trials`  `rsorted`
 
-./test-mergesort-custom <input size> <cutoff level> <number of trials> <random> <seed>
+./test-mergesort-custom `input size` `cutoff level` `number of trials` `random` `seed`
 
-./test-mergesort-custom <input size> <cutoff level> <number of trials> <negative> <seed>
+./test-mergesort-custom `input size` `cutoff level` `number of trials` `negative` `seed`
 
-./test-mergesort-custom <input size> <cutoff level> <number of trials> <equal> <number>
+./test-mergesort-custom `input size` `cutoff level` `number of trials` `equal` `number`
 
-./test-mergesort-custom <input size> <cutoff level> <number of trials> <alternating> <num1> <num2>
+./test-mergesort-custom `input size` `cutoff level` `number of trials` `alternating` `num1` `num2`
 
 
 

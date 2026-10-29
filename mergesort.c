@@ -20,8 +20,12 @@ void merge(int leftstart, int leftend, int rightstart, int rightend){
 		return;
 	}
 
-	while(leftindex <= leftend && rightindex <= rightend) {
-		B[tempindex++] = A[leftindex] <= A[rightindex] ? A[leftindex++] : A[rightindex++];
+	while (leftindex <= leftend && rightindex <= rightend) {
+		if (A[leftindex] <= A[rightindex]) {
+			B[tempindex++] = A[leftindex++];
+		} else {
+			B[tempindex++] = A[rightindex++];
+		}
 	}
 
 	while(leftindex <= leftend) {

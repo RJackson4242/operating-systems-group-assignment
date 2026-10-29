@@ -196,7 +196,7 @@ void printB(void){
 int main(int argc, char **argv) {
 
 	if (argc < 5) { // there must be at least one command-line argument
-			fprintf(stderr, "Usage: %s <input size> <cutoff level> <trial> <type of array> <parameter> \n", argv[0]);
+			fprintf(stderr, "Usage: %s <input size> <cutoff level> <trial> <number of trials> <type of array> <parameter> \n", argv[0]);
 			exit(1);
 	}
 
@@ -224,7 +224,7 @@ int main(int argc, char **argv) {
 			// generate random input
 			
 			if (argc < 5) { // there must be at least one command-line argument
-				fprintf(stderr, "Usage: %s <input size> <cutoff level> <random> <seed> \n", argv[0]);
+				fprintf(stderr, "Usage: %s <input size> <cutoff level> <number of trials> <random> <seed> \n", argv[0]);
 				exit(1);
 			}
 			int seed = atoi(argv[5]);
@@ -233,7 +233,7 @@ int main(int argc, char **argv) {
 		{
 			// generate random input
 			if (argc < 6) { // there must be at least one command-line argument
-				fprintf(stderr, "Usage: %s <input size> <cutoff level> <negative> <seed> \n", argv[0]);
+				fprintf(stderr, "Usage: %s <input size> <cutoff level> <number of trials> <negative> <seed> \n", argv[0]);
 				exit(1);
 			}
 			int seed = atoi(argv[5]);
@@ -250,7 +250,7 @@ int main(int argc, char **argv) {
 		{
 			// generate reverse sorted input
 			if (argc < 6) { // there must be at least one command-line argument
-				fprintf(stderr, "Usage: %s <input size> <cutoff level> <equal> <num> \n", argv[0]);
+				fprintf(stderr, "Usage: %s <input size> <cutoff level> <number of trials> <equal> <num> \n", argv[0]);
 				exit(1);
 			}
 			int num = atoi(argv[5]);
@@ -259,7 +259,7 @@ int main(int argc, char **argv) {
 		{
 			// generate alternating input
 			if (argc < 7) { // there must be at least one command-line argument
-				fprintf(stderr, "Usage: %s <input size> <cutoff level> <alternating> <num1> <num2> \n", argv[0]);
+				fprintf(stderr, "Usage: %s <input size> <cutoff level> <number of trials> <alternating> <num1> <num2> \n", argv[0]);
 				exit(1);
 			}
 			int num1 = atoi(argv[5]);
@@ -269,7 +269,7 @@ int main(int argc, char **argv) {
 		{
 			// read file input
 			if (argc < 6) { // there must be at least one command-line argument
-				fprintf(stderr, "Usage: %s <padding> <cutoff level> <file> <filepath> \n", argv[0]);
+				fprintf(stderr, "Usage: %s <padding> <cutoff level> <number of trials> <file> <filepath> \n", argv[0]);
 				exit(1);
 			}
 			FILE *file = fopen(argv[5], "r");

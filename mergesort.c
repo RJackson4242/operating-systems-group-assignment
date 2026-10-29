@@ -70,8 +70,11 @@ void * parallel_mergesort(void *arg){
 
 	if (left >= right) return NULL;
 
-	if (level >= cutoff) {
-		my_mergesort(left, right);
+	// checking bound before spawning and dropping to sequential sorting
+	if (level + 1 >= cutoff) {
+		my_mergesort(left, mid);
+		my_mergesort(mid + 1, right);
+		merge(left, mid, mid + 1, right);
 		return NULL;
 	}
 

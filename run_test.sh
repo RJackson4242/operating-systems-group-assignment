@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
+make test-mergesort-custom || exit 1
+
+
 exec > test-results.txt 2>&1
 
-make test-mergesort-custom || exit 1
 
 trials=3
 

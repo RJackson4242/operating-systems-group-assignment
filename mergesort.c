@@ -12,18 +12,25 @@ void merge(int leftstart, int leftend, int rightstart, int rightend){
 	int leftindex = leftstart;
 	int rightindex = rightstart;
 	int tempindex = leftstart;
-	int i;
 
-	while(leftindex <= leftend && rightindex <= rightend) {
-		B[tempindex++] = A[leftindex] <= A[rightindex] ? A[leftindex++] : A[rightindex++];
+	/* if last element of the left half is <= the first element of the right half skip the merge */
+	if (leftstart <= leftend && rightstart <= rightend
+	    && A[leftend] <= A[rightstart]) {
+		return;
 	}
 
-	while(leftindex <= leftend) {
-		B[tempindex++] = A[leftindex++];
+	while (leftindex <= leftend && rightindex <= rightend) {
+		if (A[leftindex] <= A[rightindex]) {
+			B[tempindex++] = A[leftindex++];
+		} else {
+			B[tempindex++] = A[rightindex++];
+		}
 	}
 
-	while(rightindex <= rightend) {
-		B[tempindex++] = A[rightindex++];
+	if (leftindex <= leftend) {
+    	memcpy(&B[tempindex], &A[leftindex], (leftend - leftindex + 1) * sizeof(int));
+	} else if (rightindex <= rightend) {
+		memcpy(&B[tempindex], &A[rightindex], (rightend - rightindex + 1) * sizeof(int));
 	}
 
 	memcpy(&A[leftstart], &B[leftstart], (rightend - leftstart + 1) * sizeof(int));
@@ -46,7 +53,8 @@ void * parallel_mergesort(void *arg){
 	int left, right, level, mid;
     void *leftargs;
     void *rightargs;
-    pthread_t thread_left;
+    pthread_t rightthread;
+	int thread_created; // whether pthread_create succeeded
 
 	struct argument *args = (struct argument*)arg;
 
@@ -59,23 +67,36 @@ void * parallel_mergesort(void *arg){
 
 	if (left >= right) return NULL;
 
-	if (level >= cutoff) {
+	// Stop parallelism if cutoff is reached or subarray is too small
+	if (level >= cutoff || right - left + 1 <= 1000000) {
 		my_mergesort(left, right);
 		return NULL;
 	}
 
 	mid = left + (right - left) / 2;
 
+	/* if cutoff is not reached on initial call: 
+	Avoid creating threads if the next level reaches cutof
+	drops to sequential sorting */
+	if (level + 1 >= cutoff) {
+        my_mergesort(left, mid);
+        my_mergesort(mid + 1, right);
+        merge(left, mid, mid + 1, right);
+        return NULL;
+    }
+
 	leftargs = buildArgs(left, mid, level + 1);
 	rightargs = buildArgs(mid + 1, right, level + 1);
 
-	pthread_t leftthread;
-	pthread_t rightthread;
+	thread_created = (pthread_create(&rightthread, NULL, parallel_mergesort, rightargs) == 0);
 
-	pthread_create(&leftthread, NULL, parallel_mergesort, leftargs);
-	pthread_create(&rightthread, NULL, parallel_mergesort, rightargs);
-	pthread_join(leftthread, NULL);
-	pthread_join(rightthread, NULL);
+	parallel_mergesort(leftargs); // current main thread sorting the left side
+
+	if (thread_created) {                 //safety incase the thread cration fails. 
+		pthread_join(rightthread, NULL);
+	} else {
+		parallel_mergesort(rightargs);  // direct function call if the thread creation failed
+	}
 
 	merge(left, mid, mid + 1, right);
 

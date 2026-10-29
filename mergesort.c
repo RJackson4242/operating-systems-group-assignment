@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <string.h> /* for memcpy */
 #include <stdlib.h> /* for malloc */
+#include <error.h>
 #include "mergesort.h"
 
 /* this function will be called by mergesort() and also by parallel_mergesort(). */
@@ -67,23 +68,13 @@ void * parallel_mergesort(void *arg){
 
 	if (left >= right) return NULL;
 
-	// Stop parallelism if cutoff is reached or subarray is too small
-	if (level >= cutoff || right - left + 1 <= 1000000) {
+	// Stop parallelism before cutoff is reached or subarray is too small
+	if (level >= cutoff|| right - left + 1 <= 1000000) {
 		my_mergesort(left, right);
 		return NULL;
 	}
 
 	mid = left + (right - left) / 2;
-
-	/* if cutoff is not reached on initial call: 
-	Avoid creating threads if the next level reaches cutof
-	drops to sequential sorting */
-	if (level + 1 >= cutoff) {
-        my_mergesort(left, mid);
-        my_mergesort(mid + 1, right);
-        merge(left, mid, mid + 1, right);
-        return NULL;
-    }
 
 	leftargs = buildArgs(left, mid, level + 1);
 	rightargs = buildArgs(mid + 1, right, level + 1);

@@ -7,22 +7,28 @@ README.md
 
 ## Overview
 
-Concisely explain what the program does. If this exceeds a couple of
-sentences, you're going too far. Generally, you should be pulling this
-right from the project specification. We don't want you to just cut and
-paste, but paraphrase what is stated in the project specification.
+This program implements a multithreaded merge sort in C using POSIX threads (pthreads) to sort large arrays efficiently. It recursively splits the array into smaller subarrays, concurrently sorting each subarray in its own pthread until a configurable cutoff depth, below which it switches to a sequential merge sort, and then merges the sorted results.
 
 ## Manifest
 
-A listing of source files and other non-generated files, and a brief
-(one-line) explanation of the purpose of each file.
+- `Makefile`: builds the `test-mergesort` program from the source files.
+- `mergesort.c`: implements the parallel merge sort (`parallel_mergesort`, `my_mergesort`, `merge`, `buildArgs`).
+- `mergesort.h`: declares the shared data (`A`, `B`, `cutoff`), `struct argument` and the function prototypes.
+- `test-mergesort.c`: test program that fills an array, runs the sort, and checks and times the result.
+- `README.md`: this file, an overview of the project.
 
 ## Building the project
 
-This section should tell the user how to build your code.  If you are
-delivering a library, where does it need to be installed, or how do you use
-it? Is this an executable, if so, how can a user get up to speed as fast as
-possible?
+
+Requires `gcc` (or another C compiler) and `make`.
+
+    make
+
+Compiles `mergesort.c` and `test-mergesort.c` and produces the `test-mergesort` executable.
+
+To clean the repo by removing the build files:
+
+    make clean
 
 ## Features and usage
 
@@ -35,9 +41,6 @@ This section should detail how you tested your code. Simply stating "I ran
 it a few times and it seems to work" is not sufficient. Your testing needs
 to be detailed here.
 
-## Known Bugs
-
-List known bugs that you weren't able to fix (or ran out of time to fix).
 
 ## Reflection and Self Assessment
 
@@ -48,6 +51,12 @@ What kinds of errors did you get? How did you fix them?
 What parts of the project did you find challenging? Is there anything that
 finally "clicked" for you in the process of working on this project? How well
 did the development and testing process go for you?
+
+
+## Performance Results
+
+To be added
+
 
 ## Sources Used
 

@@ -52,6 +52,12 @@ What parts of the project did you find challenging? Is there anything that
 finally "clicked" for you in the process of working on this project? How well
 did the development and testing process go for you?
 
+
+## Performance Results
+
+To be added
+
+
 ## Sources Used
 
 If you used any sources outside of the textbook, you should list them here. 

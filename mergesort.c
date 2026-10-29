@@ -67,16 +67,16 @@ void * parallel_mergesort(void *arg){
 
 	if (left >= right) return NULL;
 
-	// will cover the case where cutoff is reached on inital call
-	if (level >= cutoff) {
+	// Stop parallelism if cutoff is reached or subarray is too small
+	if (level >= cutoff || right - left + 1 <= 1000000) {
 		my_mergesort(left, right);
 		return NULL;
 	}
 
 	mid = left + (right - left) / 2;
 
-	/* if cutoff is not reached on initial call 
-	will check bound before spawning 
+	/* if cutoff is not reached on initial call: 
+	Avoid creating threads if the next level reaches cutof
 	drops to sequential sorting */
 	if (level + 1 >= cutoff) {
         my_mergesort(left, mid);

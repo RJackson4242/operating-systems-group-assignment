@@ -67,8 +67,8 @@ void * parallel_mergesort(void *arg){
 
 	if (left >= right) return NULL;
 
-	// Stop parallelism if cutoff is reached or subarray is too small
-	if (level >= cutoff || right - left + 1 <= 1000000) {
+	// Stop parallelism before cutoff is reached or subarray is too small
+	if (level >= cutoff|| right - left + 1 <= 1000000) {
 		my_mergesort(left, right);
 		return NULL;
 	}

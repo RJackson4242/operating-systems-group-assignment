@@ -14,6 +14,12 @@ void merge(int leftstart, int leftend, int rightstart, int rightend){
 	int tempindex = leftstart;
 	int i;
 
+	/* if last element of the left half is <= the first element of the right half skip the merge */
+	if (leftstart <= leftend && rightstart <= rightend
+	    && A[leftend] <= A[rightstart]) {
+		return;
+	}
+
 	while(leftindex <= leftend && rightindex <= rightend) {
 		B[tempindex++] = A[leftindex] <= A[rightindex] ? A[leftindex++] : A[rightindex++];
 	}

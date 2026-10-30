@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <string.h> /* for memcpy */
 #include <stdlib.h> /* for malloc */
-#include <error.h>
+//#include <error.h>
 #include "mergesort.h"
 
 /* this function will be called by mergesort() and also by parallel_mergesort(). */
@@ -68,7 +68,11 @@ void * parallel_mergesort(void *arg){
 
 	if (left >= right) return NULL;
 
+<<<<<<< HEAD
 	// Stop parallelism before cutoff is reached or subarray is too small
+=======
+	// Stop parallelism before cutoff is reached
+>>>>>>> testMaker
 	if (level >= cutoff) {
 		my_mergesort(left, right);
 		return NULL;
@@ -98,6 +102,10 @@ void * parallel_mergesort(void *arg){
 struct argument * buildArgs(int left, int right, int level){
 	struct argument *args = (struct argument*)malloc(sizeof(struct argument));
 
+	if (args == NULL) {
+		fprintf(stderr, "memory allocation failed in buildArgs\n");
+		exit(EXIT_FAILURE);
+	}
 	args->left = left;
 	args->right = right;
 	args->level = level;

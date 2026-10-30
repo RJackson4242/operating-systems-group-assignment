@@ -171,13 +171,13 @@ int main(int argc, char **argv) {
 		printf("Sorting %d elements took %4.2lf seconds.\n", n,  sorting_time/1000.0);
 	} else {
 		printf("%s: sorting failed!!!!\n", argv[0]);
-		free(arg);
+		//free(arg);
 		free(B);
 		free(A);
 		exit(EXIT_FAILURE);
 	}
 	/* Now we can free the memory for the two arrays, as well as free memory for arg. */
-	free(arg);
+	//free(arg);
 	free(B);
 	free(A);
 

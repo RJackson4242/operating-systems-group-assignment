@@ -70,6 +70,17 @@ Created a custom test script that read input from a text file to test specific c
 ./test-mergesort-custom `input size` `cutoff level` `number of trials` `alternating` `num1` `num2`
 
 
+To determine the speedup provided by the parallesiation the provided `test-mergesort.c` was called in a bash script call `run_test.sh` to test a number of cutoff values ranging from 0 (serial) to 10 (creation of many threads).
+
+The following performance tests were conducted on a MacBook Pro (Mac17,2) with an Apple M5 chip (4 performance and 6 efficiency cores), 32 GB of memory, and macOS 26.4. Programs were compiled by Apple Clang 21.0.0.
+
+| cutoff value | sort time (seconds) |
+| ------------ | ------------------- |
+| 0            |    22.40.           |
+
+
+
+
 
 
 ## Known Bugs

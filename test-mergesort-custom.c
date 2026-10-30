@@ -77,8 +77,6 @@ double getMilliSeconds(void)
 
 #define RANGE 1000000
 
-<<<<<<< HEAD
-=======
 void generate_random_array(int A[], int n, int seed)
 {
 	int i;
@@ -149,7 +147,6 @@ void read_file_array(int A[], int *n, FILE* file)
         }
     }
 }
->>>>>>> testMaker
 
 
 /*
@@ -198,81 +195,16 @@ void printB(void){
 
 int main(int argc, char **argv) {
 
-<<<<<<< HEAD
-	
-	if (argc < 3) { // there must be at least one command-line argument
-			fprintf(stderr, "Usage: %s <input file> <cutoff level> \n", argv[0]);
-			exit(1);
-	}
-	FILE *file = fopen(argv[1], "r");
-	cutoff = atoi(argv[2]);
-	if (file == NULL) {
-        printf("file could not be opened\n");
-        exit(1);
-    }
-	int n;
-	if (fscanf(file, "%d", &n) != 1) {
-        printf("length could not be read\n");
-        fclose(file);
-        exit(1);
-    }
-
-=======
 	if (argc < 5) { // there must be at least one command-line argument
 			fprintf(stderr, "Usage: %s <input size> <cutoff level> <trial> <number of trials> <type of array> <parameter> \n", argv[0]);
 			exit(1);
 	}
 
 	int n = atoi(argv[1]);
->>>>>>> testMaker
 	if(n<=1){
 		printf("the input size must be at least 2!");
 		exit(1);
 	}
-<<<<<<< HEAD
-
-	A = (int *) malloc(sizeof(int) * n);
-	B = (int *) malloc(sizeof(int) * n);
-	int i;
-    for (i = 0; i < n; i++) {
-        if (fscanf(file, "%d", &A[i]) != 1) {
-            printf("file ended early \n");
-			fclose(file);
-            exit(1); 
-        }
-    }
-	fclose(file);
-
-
-	double start_time;
-	double sorting_time;
-
-	// sort the input (and time it)
-	start_time = getMilliSeconds();
-	/* first index is 0, last index is n-1, we consider the main thread as level 0 */
-	struct argument *arg=buildArgs(0, n-1, 0);
-	parallel_mergesort(arg);
-	sorting_time = getMilliSeconds() - start_time;
-
-	/* print the array, for debugging purpose.
-	//printA(n);
-	//printB();
-	// print results if correctly sorted otherwise cry foul and exit*/
-	if (check_if_sorted(A,n)) {
-		printf("Sorting %d elements took %4.2lf seconds.\n", n,  sorting_time/1000.0);
-	} else {
-		printf("%s: sorting failed!!!!\n", argv[0]);
-		free(arg);
-		free(B);
-		free(A);
-		exit(EXIT_FAILURE);
-	}
-	/* Now we can free the memory for the two arrays, as well as free memory for arg. */
-	free(arg);
-	free(B);
-	free(A);
-
-=======
 	cutoff = atoi(argv[2]);
 	int trial = atoi(argv[3]);
 	if(trial<1){
@@ -386,6 +318,5 @@ int main(int argc, char **argv) {
 	
 	printf("Sorting %d elements over %d trials took an average of %4.2lf milliseconds.\n", n, trial, average);
 
->>>>>>> testMaker
 	exit(EXIT_SUCCESS);
 }

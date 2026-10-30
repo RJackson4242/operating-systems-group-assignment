@@ -68,11 +68,7 @@ void * parallel_mergesort(void *arg){
 
 	if (left >= right) return NULL;
 
-<<<<<<< HEAD
-	// Stop parallelism before cutoff is reached or subarray is too small
-=======
 	// Stop parallelism before cutoff is reached
->>>>>>> testMaker
 	if (level >= cutoff) {
 		my_mergesort(left, right);
 		return NULL;

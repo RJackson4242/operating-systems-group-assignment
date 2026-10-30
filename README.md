@@ -15,7 +15,7 @@ The code sorts the array A with a top-down parallel merge sort. `parallel_merges
 
 Sorted halves are merged by `merge` which writes into the scratch array B and copies the result back into A (the main array). One minor optimisation done at this level was to skip the merge if the last element of the left half is not larger than the first element of the right half, meaning the range is already in order. Moreover, bulk tail copy was implemented, meaning once one half is exhausted, the remainder of the other half is moved with a single `memcpy` rather than a loop.
 
-The two threads working on sibling halves touch disjoint index ranges of A and B and hence no locks are needed. The parent merges only after joining its child. `buildArgs` allocates each thread’s argument struct, which `parallel_mergesort` frees on entry, and it exits with an error message if `malloc` fails.
+The two threads working on different halves write to seperate index ranges of A and B and hence no locks are needed. The parent merges only after joining the child. `buildArgs` allocates each thread’s argument struct, which `parallel_mergesort` frees on entry, and it exits with an error message if `malloc` fails.
 
 ## Manifest
 
@@ -45,10 +45,15 @@ There is 3 custom bash scripts:
 
 ## Features and usage
 
-Summarise the main features of your program. It is also appropriate to
-instruct the user how to use your program.
+After building the following executable can be run:
 
-These can be run with
+    ./test-mergesort <input size> <cutoff level> <seed>
+
+- Input size: Number of random integers to sort (must be at least 2).
+- Cutoff level: Number of levels of threads meaning up to 2^(cutoff threads) sort at the same time. if cutoff = 0, sorting will be done sequentially. A cutoff level producing a number of threads closer to the available CPU core count of the machine should theoretically provide the best performance.
+- Seed: seed for the random number generator
+
+Custom bash scripts can be run with 
 
     bash run_test.sh
 

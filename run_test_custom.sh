@@ -9,7 +9,10 @@ trials=3
 
 length=100000000
 
-for n in 2 "$length"; do
+lengthOdd=100000001
+
+
+for n in 2 3 "$length" "$lengthOdd"; do
     for cutoff in 0 1 2 3 4 5; do
         echo "sorted n:$n cutoff:$cutoff" 
         ./test-mergesort-custom "$n" "$cutoff" "$trials" sorted
@@ -17,7 +20,7 @@ for n in 2 "$length"; do
     done
 done
 
-for n in 2 "$length"; do
+for n in 2 3 "$length" "$lengthOdd"; do
     for cutoff in 0 1 2 3 4 5; do
         echo "rsorted n:$n cutoff:$cutoff" 
         ./test-mergesort-custom "$n" "$cutoff" "$trials" rsorted
@@ -26,7 +29,7 @@ for n in 2 "$length"; do
 done
 
 
-for n in 2 "$length"; do
+for n in 2 3 "$length" "$lengthOdd"; do
     for cutoff in 0 1 2 3 4 5; do
         echo "random n:$n cutoff:$cutoff seed:42" 
         ./test-mergesort-custom "$n" "$cutoff" "$trials" random 42
@@ -34,7 +37,7 @@ for n in 2 "$length"; do
     done
 done
 
-for n in 2 "$length"; do
+for n in 2 3 "$length" "$lengthOdd"; do
     for cutoff in 0 1 2 3 4 5; do
         echo "negative n:$n cutoff:$cutoff seed:42" 
          ./test-mergesort-custom "$n" "$cutoff" "$trials" negative 42
@@ -43,7 +46,7 @@ for n in 2 "$length"; do
 done
 
 
-for n in 2 "$length"; do
+for n in 2 3 "$length" "$lengthOdd"; do
     for cutoff in 0 1 2 3 4 5; do
         echo "equal n:$n cutoff:$cutoff number:7" 
         ./test-mergesort-custom "$n" "$cutoff" "$trials" equal 7
@@ -51,7 +54,7 @@ for n in 2 "$length"; do
     done
 done
 
-for n in 2 "$length"; do
+for n in 2 3 "$length" "$lengthOdd"; do
     for cutoff in 0 1 2 3 4 5; do
         echo "alternating n:$n cutoff:$cutoff num1:-2147483648 num2:2147483647" 
         ./test-mergesort-custom "$n" "$cutoff" "$trials" alternating -2147483648 -2147483647

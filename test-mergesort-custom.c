@@ -127,25 +127,28 @@ void generate_alternating_array(int A[], int n, int num1, int num2)
 		}
 }
 
-void read_file_array(int A[], int *n, FILE* file)
+void read_file_array(int A[], int *n, int capacity, FILE* file)
 {
+	int file_length;
+	int i;
+
 	if (file == NULL) {
-        printf("file could not be opened\n");
+        fprintf(stderr, "file could not be opened\n");
         exit(1);
     }
-	if (fscanf(file, "%d", n) != 1) {
-        printf("length could not be read\n");
+	if (fscanf(file, "%d", &file_length) != 1 || file_length < 2 || file_length > capacity) {
+        fprintf(stderr, "invalid file length (must be between 2 and %d)\n", capacity);
         fclose(file);
         exit(1);
     }
-	int i;
-    for (i = 0; i < *n; i++) {
+    for (i = 0; i < file_length; i++) {
         if (fscanf(file, "%d", &A[i]) != 1) {
-            printf("file ended early \n");
+			fprintf(stderr, "file ended early\n");
 			fclose(file);
             exit(1); 
         }
     }
+	*n = file_length;
 }
 
 
@@ -213,8 +216,15 @@ int main(int argc, char **argv) {
 		printf("the number of trials must be at least 1");
 		exit(1);
 	} 
+	int capacity = n;
 	A = (int *) malloc(sizeof(int) * n);
 	B = (int *) malloc(sizeof(int) * n);
+	if (A == NULL || B == NULL) {
+		fprintf(stderr, "could not allocate arrays\n");
+		free(A);
+		free(B);
+		exit(1);
+	}
 	int count = 0;
 	
 	double sum = 0;
@@ -276,7 +286,7 @@ int main(int argc, char **argv) {
 			}
 			FILE *file = fopen(argv[5], "r");
 
-			read_file_array(A, &n, file);
+			read_file_array(A, &n, capacity, file);
 
 			fclose(file);
 		} else

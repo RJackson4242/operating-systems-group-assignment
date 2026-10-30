@@ -110,7 +110,6 @@ int check_if_sorted(int A[], int n)
 void printA(int n){
 	int i;
 	printf("Array A:");
-	/* FIXME: we assume the size of A is at least 100, and this will fail if it is lower than 100 */
 	if (n >= 100)
 	{
 		n = 100;
@@ -121,16 +120,19 @@ void printA(int n){
 	printf("\n");
 }
 
-/* this function prints B, but we only print the first 100 elements */
-void printB(void){
+void printB(int n){
 	int i;
 	printf("Array B:");
-	/* FIXME: we assume the size of B is at least 100, and this will fail if it is lower than 100 */
-	for(i=0;i<100;i++){
+	if (n >= 100)
+	{
+		n = 100;
+	}
+	for(i=0;i<n;i++){
 		printf(" %d",B[i]);
 	}
 	printf("\n");
 }
+
 
 int main(int argc, char **argv) {
 
@@ -163,21 +165,15 @@ int main(int argc, char **argv) {
 	parallel_mergesort(arg);
 	sorting_time = getMilliSeconds() - start_time;
 
-	// print the array, for debugging purpose.
-	//printA(n);
-	//printB();
-	// print results if correctly sorted otherwise cry foul and exit
 	if (check_if_sorted(A,n)) {
 		printf("Sorting %d elements took %4.2lf seconds.\n", n,  sorting_time/1000.0);
 	} else {
 		printf("%s: sorting failed!!!!\n", argv[0]);
-		//free(arg);
 		free(B);
 		free(A);
 		exit(EXIT_FAILURE);
 	}
-	/* Now we can free the memory for the two arrays, as well as free memory for arg. */
-	//free(arg);
+	/* Now we can free the memory for the two arrays*/
 	free(B);
 	free(A);
 

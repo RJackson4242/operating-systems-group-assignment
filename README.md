@@ -15,7 +15,7 @@ The code sorts the array A with a top-down parallel merge sort. `parallel_merges
 
 Sorted halves are merged by `merge` which writes into the scratch array B and copies the result back into A (the main array). One minor optimisation done at this level was to skip the merge if the last element of the left half is not larger than the first element of the right half, meaning the range is already in order. Moreover, bulk tail copy was implemented, meaning once one half is exhausted, the remainder of the other half is moved with a single `memcpy` rather than a loop.
 
-The two threads working on sibling halves touch disjoint index ranges of A and B and hence no locks are needed. The parent merges only after joining its child. `buildArgs` allocates each thread’s argument struct, which `parallel_mergesort` frees on entry, and it exits with an error message if `malloc` fails.
+The two threads working on different halves write to seperate index ranges of A and B and hence no locks are needed. The parent merges only after joining the child. `buildArgs` allocates each thread’s argument struct, which `parallel_mergesort` frees on entry, and it exits with an error message if `malloc` fails.
 
 ## Manifest
 

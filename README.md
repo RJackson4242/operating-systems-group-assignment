@@ -15,7 +15,7 @@ The code sorts the array A with a top-down parallel merge sort. `parallel_merges
 
 Sorted halves are merged by `merge` which writes into the scratch array B and copies the result back into A (the main array). One minor optimisation done at this level was to skip the merge if the last element of the left half is not larger than the first element of the right half, meaning the range is already in order. Moreover, bulk tail copy was implemented, meaning once one half is exhausted, the remainder of the other half is moved with a single `memcpy` rather than a loop.
 
-The two threads working on different halves write to seperate index ranges of A and B and hence no locks are needed. The parent merges only after joining the child. `buildArgs` allocates each thread’s argument struct, which `parallel_mergesort` frees on entry, and it exits with an error message if `malloc` fails.
+The two threads working on different halves write to separate index ranges of A and B and hence no locks are needed. The parent merges only after joining the child. `buildArgs` allocates each thread’s argument struct, which `parallel_mergesort` frees on entry, and it exits with an error message if `malloc` fails.
 
 ## Manifest
 
@@ -50,7 +50,7 @@ After building the following executable can be run:
    ./test-mergesort <input size> <cutoff level> <seed>
 
 - Input size: Number of random integers to sort (must be at least 2).
-- Cutoff level: Number of levels of threads meaning up to 2^(cutoff threads) sort at the same time. if cutoff = 0, sorting will be done sequentially. A cutoff level producing a number of threads closer to the available CPU core count of the machine should theoretically provide the best performance.
+- Cutoff level: Number of levels of threads meaning up to 2^(cutoff) threads can be created and sort subarrays in parallel provided the necessary computing resources are available. If cutoff = 0, sorting will be done sequentially. A cutoff level producing a number of threads closer to the available CPU core count of the machine should theoretically provide the best performance.
 - Seed: seed for the random number generator
 
 Custom bash scripts can be run with 
@@ -59,7 +59,7 @@ Custom bash scripts can be run with
 
     bash run_test_custom.sh
 
-    bash run_test_random_.sh
+    bash run_test_random.sh
 
 This will run the script generating a variety of arrays for different testing.
 
@@ -80,14 +80,14 @@ The formatting for using the new custom test script is as follows. This will ave
 
 ## Testing
 
-Created a custom test script that read input from a text file to test specific custom inputs and has various functions to generate different types of arrays rather than just randomly generated inputs. Also created a bash script to automate the creation and testing of these different input arrays rather than manually running many different commands. The output of these commands is also piped into a text file so that they cna easily be read and compared through this script. The types of arrays tested and compared are sorted arrays, reverse sorted arrays, equal arrays where all arrays are the same element, alternating arrays where the array alternates between two values, random arrays which are made of random positive integers and random negative arrays that have random positive and negative numbers. These tests all passed successfully without any failures as seen in the `test-custom-results.txt` raw output.
+Created a custom test script that read input from a text file to test specific custom inputs and has various functions to generate different types of arrays rather than just randomly generated inputs. Also created a bash script to automate the creation and testing of these different input arrays rather than manually running many different commands. The output of these commands is also piped into a text file so that they can easily be read and compared through this script. The types of arrays tested and compared are sorted arrays, reverse sorted arrays, equal arrays where all arrays are the same element, alternating arrays where the array alternates between two values, random arrays which are made of random positive integers and random negative arrays that have random positive and negative numbers. These tests all passed successfully without any failures as seen in the `test-custom-results.txt` raw output.
 
-Custom arrays were run were run using the custom file input such as 1 sized arrays which succesfully exited safetly.
+Custom arrays were run using the custom file input such as 1 sized arrays which successfully exited safely.
 
-To determine the speedup provided by the parallesiation the provided `test-mergesort.c` was called in a bash script call `run_test.sh` to test a number of cutoff values ranging from 0 (serial) to 10 (creation of many threads).
+To determine the speedup provided by the parallelisation the provided `test-mergesort.c` was called in a bash script call `run_test.sh` to test a number of cutoff values ranging from 0 (serial) to 10 (creation of many threads) and 15 and 20 were also included.
 
 The following performance tests were conducted on a MacBook Pro (Mac17,2) with an Apple M5 chip (4 performance and 6 efficiency cores), 32 GB of memory, and macOS 26.4. Programs were compiled by Apple Clang 21.0.0.
-The following table presents the results outputted by the `run_test.sh` which ran `test-mergesort` with a seed of `42` and an array size of 100000000. Hence it can be seen that increasing cutoff value beyond around 4 there is a signifcant plateau after a cutoff value of 4 as the overhead from creating threads becomes too great and the computer has less available cores for parallelisation. For larger cutoff values the overhead from threads dominates and causes signifigant slowdown. Each table row represents one run of the `test-mergesort` rather than an average. `test-results.txt` contains the raw output of `run_test.sh` run on the aforementioned machine.
+The following table presents the results outputted by the `run_test.sh` which ran `test-mergesort` with a seed of `42` and an array size of 100000000. Hence it can be seen that increasing cutoff value beyond around 4 there is a significant plateau after a cutoff value of 4 as the overhead from creating threads becomes too great and the computer has less available cores for parallelisation. For larger cutoff values the overhead from threads dominates and causes significant slowdown. Each table row represents one run of the `test-mergesort` rather than an average. `test-results.txt` contains the raw output of `run_test.sh` run on the aforementioned machine.
 
 | Cutoff value | Sort time (seconds) | Speedup |
 | ------------ | ------------------- | ------- |
@@ -111,15 +111,15 @@ No known bugs at the time of submission.
 
 ## Reflection and Self Assessment
 
-One problem we ran into during testing was the speed of running tests as the initial testing scheme involved writing and reading enormous arrays to files wasting signifigant time and space resources on the computer slowing down testing. Thus the custom testing scheme was adapted so the large arrays could be quickly generated by C code in memory rather than writing them to the disk which was much slower. This led to a great speedup in testing.
+One problem we ran into during testing was the speed of running tests as the initial testing scheme involved writing and reading enormous arrays to files wasting significant time and space resources on the computer slowing down testing. Thus the custom testing scheme was adapted so the large arrays could be quickly generated by C code in memory rather than writing them to the disk which was much slower. This led to a great speedup in testing.
 
-Another problem that we encounted was causing a crash with the shell message `zsh: trace trap`. By investigating the code base we were able to determine it was a double free error. To determine where this was occuring we analysed all the places `free()` and `malloc()` was used and found that the arg structure was inputted into the initial `parallel_mergesort()` call was freed by parallel_mergesort and then also freed by the testing file. Thus one of these had to be removed and the most obvious pick was the `free()` in the testing file since the `free()` in the `parallel_mergesort()` function also free all subsequent argument strucutres made by recursive calls of the function. Thus the incorrectly placed `free()` was removed and the error was overcome.
+Another problem that we encountered was causing a crash with the shell message `zsh: trace trap`. By investigating the code base we were able to determine it was a double free error. To determine where this was occurring we analysed all the places `free()` and `malloc()` was used and found that the arg structure was inputted into the initial `parallel_mergesort()` call was freed by parallel_mergesort and then also freed by the testing file. Thus one of these had to be removed and the most obvious pick was the `free()` in the testing file since the `free()` in the `parallel_mergesort()` function also free all subsequent argument structures made by recursive calls of the function. Thus the incorrectly placed `free()` was removed and the error was overcome.
 
 One thing that was only considered later into the development of the code was to adding a failsafe for the pthread creation. Without error handling for `pthread_create` if creation failed the code would join an uninitialised handle. Therefore it was chosen to fall back to sequential sorting on failure to avoid potential errors.
 
 A challenging concept to study was the effect of adding a minimum subarray size check before creating more threads, in addition to the original cutoff check. With this check, even if the configurable cutoff value were set too high no additional threads would be created for small ranges, which would not benefit from parallelism and would only add unnecessary overhead. Studying this effect was valuable for understanding, but it was decided not to include the check in the code in case it did not aligned with the purpose of this assignment. However, without this check, the time taken with a cutoff of 15 is roughly double that with a cutoff of 5, and with a cutoff of 20 the time taken is unnecessarily high and not feasible at all. A potential performance problem therefore exists if the configurable cutoff value is set too high, and adding the check back in would prevent it.
 
-The testing process went successfully with no signifigant new bugs found in the extensive testing process with custom scripts and custom array types which had worst and best case scenarios.
+The testing process went successfully with no significant new bugs found in the extensive testing process with custom scripts and custom array types which had worst and best case scenarios.
 
 ## Sources Used
 

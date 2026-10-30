@@ -45,10 +45,15 @@ There is 3 custom bash scripts:
 
 ## Features and usage
 
-Summarise the main features of your program. It is also appropriate to
-instruct the user how to use your program.
+After building the following executable can be run:
 
-These can be run with
+    ./test-mergesort <input size> <cutoff level> <seed>
+
+- Input size: Number of random integers to sort (must be at least 2).
+- Cutoff level: Number of levels of threads meaning up to 2^(cutoff threads) sort at the same time. if cutoff = 0, sorting will be done sequentially. A cutoff level producing a number of threads closer to the available CPU core count of the machine should theoretically provide the best performance.
+- Seed: seed for the random number generator
+
+Custom bash scripts can be run with 
 
     bash run_test.sh
 

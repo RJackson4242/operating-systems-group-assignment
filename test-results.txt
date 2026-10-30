@@ -1,0 +1,39 @@
+random n:100000000 cutoff:0 seed:42
+Sorting 100000000 elements took 11.25 seconds.
+exit code: 0
+random n:100000000 cutoff:1 seed:42
+Sorting 100000000 elements took 6.06 seconds.
+exit code: 0
+random n:100000000 cutoff:2 seed:42
+Sorting 100000000 elements took 3.19 seconds.
+exit code: 0
+random n:100000000 cutoff:3 seed:42
+Sorting 100000000 elements took 2.19 seconds.
+exit code: 0
+random n:100000000 cutoff:4 seed:42
+Sorting 100000000 elements took 2.06 seconds.
+exit code: 0
+random n:100000000 cutoff:5 seed:42
+Sorting 100000000 elements took 2.10 seconds.
+exit code: 0
+random n:100000000 cutoff:6 seed:42
+Sorting 100000000 elements took 2.08 seconds.
+exit code: 0
+random n:100000000 cutoff:7 seed:42
+Sorting 100000000 elements took 2.23 seconds.
+exit code: 0
+random n:100000000 cutoff:8 seed:42
+Sorting 100000000 elements took 2.09 seconds.
+exit code: 0
+random n:100000000 cutoff:9 seed:42
+Sorting 100000000 elements took 2.12 seconds.
+exit code: 0
+random n:100000000 cutoff:10 seed:42
+Sorting 100000000 elements took 2.21 seconds.
+exit code: 0
+random n:100000000 cutoff:15 seed:42
+Sorting 100000000 elements took 4.88 seconds.
+exit code: 0
+random n:100000000 cutoff:20 seed:42
+Sorting 100000000 elements took 266.84 seconds.
+exit code: 0

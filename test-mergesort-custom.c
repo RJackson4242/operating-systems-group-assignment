@@ -282,7 +282,6 @@ int main(int argc, char **argv) {
 			fprintf(stderr, "Unknown array type provided.\n Accepted types are sorted, rsorted, equal, alternating, random, negative, file");
 			exit(1);
 		}
-		//printA(n);
 
 
 		double start_time;
@@ -303,7 +302,6 @@ int main(int argc, char **argv) {
 			sum += sorting_time;
 		} else {
 			printf("%s: sorting failed!!!!\n", argv[0]);
-			//free(arg);
 			free(B);
 			free(A);
 			exit(EXIT_FAILURE);

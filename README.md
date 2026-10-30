@@ -57,6 +57,19 @@ This will run the script generating a variety of arrays for different testing.
 Summarise the main features of your program. It is also appropriate to
 instruct the user how to use your program.
 
+./test-mergesort-custom `input size` `cutoff level` `number of trials` `sorted`
+
+./test-mergesort-custom `input size` `cutoff level` `number of trials`  `rsorted`
+
+./test-mergesort-custom `input size` `cutoff level` `number of trials` `random` `seed`
+
+./test-mergesort-custom `input size` `cutoff level` `number of trials` `negative` `seed`
+
+./test-mergesort-custom `input size` `cutoff level` `number of trials` `equal` `number`
+
+./test-mergesort-custom `input size` `cutoff level` `number of trials` `alternating` `num1` `num2`
+
+
 ## Testing
 
 Created a custom test script that read input from a text file to test specific custom inputs and has various functions to generate different types of arrays rather than just randomly generated inputs. Also created a bash script to automate the creation and testing of these different input arrays rather than manually running many different commands. The output of these commands is also piped into a text file so that they cna easily be read and compared through this script. The types of arrays tested and compared are sorted arrays, reverse sorted arrays, equal arrays where all arrays are the same element, alternating arrays where the array alternates between two values, random arrays which are made of random positive integers and random negative arrays that have random positive and negative numbers.
@@ -81,25 +94,23 @@ Created a custom test script that read input from a text file to test specific c
 To determine the speedup provided by the parallesiation the provided `test-mergesort.c` was called in a bash script call `run_test.sh` to test a number of cutoff values ranging from 0 (serial) to 10 (creation of many threads).
 
 The following performance tests were conducted on a MacBook Pro (Mac17,2) with an Apple M5 chip (4 performance and 6 efficiency cores), 32 GB of memory, and macOS 26.4. Programs were compiled by Apple Clang 21.0.0.
+The following table presents the results outputted by the `run_test.sh` which ran `test-mergesort` with a seed of `42` and an array size of 100000000. Hence it can be seen that increasing cutoff value beyond around 5 there is a signifcant plateau after a cutoff value of 5 as the overhead from creating threads becomes too great and the computer has less available cores for parallelisation. For larger cutoff values the overhead from threads dominates and causes signifigant slowdown. Each table row represents one run of the `test-mergesort` rather than an average.
 
-| cutoff value | sort time (seconds) | Speed Up |
-| ------------ | ------------------- |-|
-| 0            |    22.40      | 1x |
-| 1            |    11.38      | 1.97x |
-| 2            |    6.01      | 3.73x|
-| 3            |    3.39      | 6.61x |
-| 4            |    3.26      | 6.87x |
-| 5            |    3.19      | 7.02x |
-| 6            |    3.22      | 6.96x |
-| 7            |    3.23      | 6.91x |
-| 8            |    3.18      | 7.04x |
-| 9            |    3.18      | 7.04x |
-| 10           |    3.44     | 6.51x |
-
-
-
-
-
+| Cutoff value | Sort time (seconds) | Speedup |
+| ------------ | ------------------- | ------- |
+| 0            | 11.25               | 1.00x   |
+| 1            | 6.06                | 1.86x   |
+| 2            | 3.19                | 3.53x   |
+| 3            | 2.19                | 5.14x   |
+| 4            | 2.06                | 5.46x   |
+| 5            | 2.10                | 5.36x   |
+| 6            | 2.08                | 5.41x   |
+| 7            | 2.23                | 5.04x   |
+| 8            | 2.09                | 5.38x   |
+| 9            | 2.12                | 5.31x   |
+| 10           | 2.21                | 5.09x   |
+| 15           | 4.88                | 2.31x   |
+| 20           | 266.84              | 0.04x   |
 
 
 

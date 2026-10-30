@@ -104,7 +104,7 @@ Thus based off these results the optimal cutoff value on the mac m5 machine is p
 
 ## Known Bugs
 
-
+No known bugs at the time of submission.
 
 ## Reflection and Self Assessment
 
@@ -114,7 +114,7 @@ Another problem that we encounted was causing a crash with error code `zsh: trac
 
 One thing that was only considered later into the development of the code was to adding a failsafe for the pthread creation. Without error handling for `pthread_create` if creation failed the code would join an uninitialised handle. Therefore it was chosen to fall back to sequential sorting on failure to avoid potential errors.
 
-A challenging concept to study was the effect of adding a minimum subarray size check before creating more threads, in addition to the original cutoff check. With this check, even if the configurable cutoff value were set too high no additional threads would be created for small ranges, which would not benefit from parallelism and would only add unnecessary overhead. Studying this effect was valuable for understanding, but it was decided not to include the check in the code in case it did not aligned with the purpose of this assignment. However, without this check, the average time taken with a cutoff of 15 is roughly double that with a cutoff of 5, and with a cutoff of 20 the time taken is unnecessarily high and not feasible at all. A potential performance problem therefore exists if the configurable cutoff value is set too high, and adding the check back in would prevent it.
+A challenging concept to study was the effect of adding a minimum subarray size check before creating more threads, in addition to the original cutoff check. With this check, even if the configurable cutoff value were set too high no additional threads would be created for small ranges, which would not benefit from parallelism and would only add unnecessary overhead. Studying this effect was valuable for understanding, but it was decided not to include the check in the code in case it did not aligned with the purpose of this assignment. However, without this check, the time taken with a cutoff of 15 is roughly double that with a cutoff of 5, and with a cutoff of 20 the time taken is unnecessarily high and not feasible at all. A potential performance problem therefore exists if the configurable cutoff value is set too high, and adding the check back in would prevent it.
 
 Discuss the issues you encountered during development and testing. What
 problems did you have? What did you have to research and learn on your own?
@@ -128,7 +128,4 @@ did the development and testing process go for you?
 
 Used https://www.geeksforgeeks.org/c/multithreading-in-c/ to confirm knowledge on Multithreading in C.
 
-If you used any sources outside of the textbook, you should list them here. 
-If you looked something up on stackoverflow.com or you use help from AI, and 
-fail to cite it in this section, it will be considered plagiarism and dealt 
-with accordingly. So be safe CITE!
+We used ChatGPT (OpenAI) to clarify concepts including recursive merge sort, pthread_create and pthread_join, why threads sorting separate array ranges do not need locks, ownership of allocated memory, and the effect of thread cutoff levels on performance. 

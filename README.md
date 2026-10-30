@@ -76,7 +76,7 @@ The following performance tests were conducted on a MacBook Pro (Mac17,2) with a
 
 | cutoff value | sort time (seconds) |
 | ------------ | ------------------- |
-| 0            |    22.40.           |
+| 0            |    22.40        |
 
 
 

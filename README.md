@@ -74,9 +74,22 @@ To determine the speedup provided by the parallesiation the provided `test-merge
 
 The following performance tests were conducted on a MacBook Pro (Mac17,2) with an Apple M5 chip (4 performance and 6 efficiency cores), 32 GB of memory, and macOS 26.4. Programs were compiled by Apple Clang 21.0.0.
 
-| cutoff value | sort time (seconds) |
-| ------------ | ------------------- |
-| 0            |    22.40        |
+| cutoff value | sort time (seconds) | Speed Up |
+| ------------ | ------------------- |-|
+| 0            |    22.40      | 1x |
+| 1            |    11.38      | 1.97x |
+| 2            |    6.01      | 3.73x|
+| 3            |    3.39      | 6.61x |
+| 4            |    3.26      | 6.87x |
+| 5            |    3.19      | 7.02x |
+| 6            |    3.22      | 6.96x |
+| 7            |    3.23      | 6.91x |
+| 8            |    3.18      | 7.04x |
+| 9            |    3.18      | 7.04x |
+| 10           |    3.44     | 6.51x |
+
+
+
 
 
 

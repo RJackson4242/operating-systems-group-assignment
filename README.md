@@ -47,7 +47,7 @@ There is 3 custom bash scripts:
 
 After building the following executable can be run:
 
-    ./test-mergesort <input size> <cutoff level> <seed>
+   ./test-mergesort <input size> <cutoff level> <seed>
 
 - Input size: Number of random integers to sort (must be at least 2).
 - Cutoff level: Number of levels of threads meaning up to 2^(cutoff threads) sort at the same time. if cutoff = 0, sorting will be done sequentially. A cutoff level producing a number of threads closer to the available CPU core count of the machine should theoretically provide the best performance.
@@ -63,6 +63,7 @@ Custom bash scripts can be run with
 
 This will run the script generating a variety of arrays for different testing.
 
+The formatting for using the new custom test script is as follows. This will average over a number of trials a particular cutoff level and input size.
 
 ./test-mergesort-custom `input size` `cutoff level` `number of trials` `sorted`
 
@@ -79,14 +80,9 @@ This will run the script generating a variety of arrays for different testing.
 
 ## Testing
 
-Created a custom test script that read input from a text file to test specific custom inputs and has various functions to generate different types of arrays rather than just randomly generated inputs. Also created a bash script to automate the creation and testing of these different input arrays rather than manually running many different commands. The output of these commands is also piped into a text file so that they cna easily be read and compared through this script. The types of arrays tested and compared are sorted arrays, reverse sorted arrays, equal arrays where all arrays are the same element, alternating arrays where the array alternates between two values, random arrays which are made of random positive integers and random negative arrays that have random positive and negative numbers.
+Created a custom test script that read input from a text file to test specific custom inputs and has various functions to generate different types of arrays rather than just randomly generated inputs. Also created a bash script to automate the creation and testing of these different input arrays rather than manually running many different commands. The output of these commands is also piped into a text file so that they cna easily be read and compared through this script. The types of arrays tested and compared are sorted arrays, reverse sorted arrays, equal arrays where all arrays are the same element, alternating arrays where the array alternates between two values, random arrays which are made of random positive integers and random negative arrays that have random positive and negative numbers. These tests all passed successfully without any failures as seen in the `test-custom-results.txt` raw output.
 
-Custom arrays were run with files such as 1 sized arrays which succesfully exited safetly.
-
-These tests all passed successfully without 
-
-### The format of the test-mergesort-custom usage is as follows:
-
+Custom arrays were run were run using the custom file input such as 1 sized arrays which succesfully exited safetly.
 
 To determine the speedup provided by the parallesiation the provided `test-mergesort.c` was called in a bash script call `run_test.sh` to test a number of cutoff values ranging from 0 (serial) to 10 (creation of many threads).
 
@@ -123,13 +119,7 @@ One thing that was only considered later into the development of the code was to
 
 A challenging concept to study was the effect of adding a minimum subarray size check before creating more threads, in addition to the original cutoff check. With this check, even if the configurable cutoff value were set too high no additional threads would be created for small ranges, which would not benefit from parallelism and would only add unnecessary overhead. Studying this effect was valuable for understanding, but it was decided not to include the check in the code in case it did not aligned with the purpose of this assignment. However, without this check, the time taken with a cutoff of 15 is roughly double that with a cutoff of 5, and with a cutoff of 20 the time taken is unnecessarily high and not feasible at all. A potential performance problem therefore exists if the configurable cutoff value is set too high, and adding the check back in would prevent it.
 
-Discuss the issues you encountered during development and testing. What
-problems did you have? What did you have to research and learn on your own?
-What kinds of errors did you get? How did you fix them?
-
-What parts of the project did you find challenging? Is there anything that
-finally "clicked" for you in the process of working on this project? How well
-did the development and testing process go for you?
+The testing process went successfully with no signifigant new bugs found in the extensive testing process with custom scripts and custom array types which had worst and best case scenarios.
 
 ## Sources Used
 

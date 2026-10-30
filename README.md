@@ -125,4 +125,7 @@ The testing process went successfully with no significant new bugs found in the 
 
 Used https://www.geeksforgeeks.org/c/multithreading-in-c/ to confirm knowledge on Multithreading in C.
 
-ChatGPT was utilised to clarify concepts including pthread_create and pthread_join, why threads sorting separate array ranges do not need locks, ownership of allocated memory, and the effect of thread cutoff levels on performance. 
+ChatGPT was utilised to clarify concepts including pthread_create and pthread_join, why threads sorting separate array ranges do not need locks, ownership of allocated memory, and the effect of thread cutoff levels on performance.
+
+For example the following prompt was utilised for explanation:
+I’m studying a parallel merge sort in C that creates threads down to a configurable cutoff depth. Explain what a minimum subarray size check is, and why it would be used alongside the cutoff check. I’m new to threads, so explain it from first principles using a small example. Cover what problem it solves, how it would change my parallel_mergesort function and what trade-offs it has. Don’t change my code, just explain the concept.
